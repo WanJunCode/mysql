@@ -4,9 +4,14 @@
 
 using namespace mysqlpp;
 
+void pool(){
+    // 纯虚函数
+    // ConnectionPool *pool = new ConnectionPool();
+}
+
 int main(int argc,char* argv[]){
     printf("====================== usage about mysql connection =======================\n");
-    Connection *conn =new Connection("test_db","localhost", "root","wanjun", 3306);
+    Connection *conn =new Connection("test_db","localhost", argv[1],"wanjun", 3306);
 
     Connection *conn2 = new Connection(*conn);
     delete conn2;
