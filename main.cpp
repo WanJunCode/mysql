@@ -1,17 +1,28 @@
 #define MYSQLPP_MYSQL_HEADERS_BURIED
 #include <mysql++/mysql++.h>
 #include <stdio.h>
+#include <iostream>
+#include <iomanip>
 
+using namespace std;
 using namespace mysqlpp;
 
-void pool(){
-    // 纯虚函数
-    // ConnectionPool *pool = new ConnectionPool();
-}
+void pool();
+
+void example();
 
 int main(int argc,char* argv[]){
+    
+    return 0;
+}
+
+void pool(){
+
+}
+
+void example(){
     printf("====================== usage about mysql connection =======================\n");
-    Connection *conn =new Connection("test_db","localhost", argv[1],"wanjun", 3306);
+    Connection *conn =new Connection("test_db","localhost", "wanjun", "wanjun", 3306);
 
     Connection *conn2 = new Connection(*conn);
     delete conn2;
@@ -48,6 +59,15 @@ int main(int argc,char* argv[]){
     printf("protocol version [%d]\n",conn->protocol_version());
     printf("server version [%s]\n",conn->server_version().c_str());
 
+    Query query = conn->query("select * from fruits");
+    StoreQueryResult result = query.store();
+    for(auto iter=result.begin();iter!=result.end();++iter){
+        Row row = *iter;
+        cout<<setw(10)<<row[0]<<
+            setw(10)<<row[1]<<
+            setw(10)<<row[2]<<
+            setw(10)<<row[3]<<endl;
+    }
+
     delete conn;
-    return 0;
 }
